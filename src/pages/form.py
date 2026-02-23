@@ -13,8 +13,6 @@ st.set_page_config(
 st.header("Speicherumfrage 2026")
 st.write("Liebes Mitglied, wir ersuchen dich um Rückmeldung über \"Aktuelle Speichersituation\" in unserer Energiegemeinschaft")
 
-st.write("Deine Stammdaten bei uns")
-
 with st.form("form"):
 
     with st.expander("Stammdaten", expanded=True):
@@ -128,6 +126,11 @@ with st.form("form"):
             accept_multiple_files=True
         )
 
-    st.form_submit_button("Absenden")
+    # _, col, _ = st.columns([1,1,1])
+
+    # with col:
+    #     st.form_submit_button("Absenden", use_container_width=True)
+    
+    st.form_submit_button("Absenden", use_container_width=True)
 
     # hoover, center btn, hide form?, subheader?, press enter to submit form?
