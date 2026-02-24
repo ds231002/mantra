@@ -16,7 +16,10 @@ st.write("Liebes Mitglied, wir ersuchen dich um Rückmeldung über \"Aktuelle Sp
 with st.form("form"):
 
     with st.expander("Stammdaten", expanded=True):
-        eg = st.text_input("Energiegemeinschaft")
+        eg = st.text_input(
+            "Energiegemeinschaft",
+            value="Göttweigblick eGen",
+            disabled=True)
 
         mitgliedsnummer = st.text_input("Mitgliedsnummer") # only digit (text_input to not lose first 0)
 
