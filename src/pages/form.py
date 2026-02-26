@@ -150,6 +150,3 @@ with st.form("form"):
         else:
             st.success("Validierung erfolgreich")
             # save form_data to db
-
-
-    
