@@ -1,9 +1,15 @@
 import streamlit as st
+import re
 
 # import os
 # from dotenv import load_dotenv
 # load_dotenv()
 # DATABASE_ACCESS=os.getenv("DATABASE_ACCESS")
+
+# sample validation
+def validate_email(email):
+    pattern = r"^[\w\.-]+@[\w\.-]+\.\w+$"
+    return re.match(pattern, email)
 
 st.set_page_config(
     page_title="Formular",
@@ -21,7 +27,7 @@ with st.form("form"):
             value="Göttweigblick eGen",
             disabled=True)
 
-        mitgliedsnummer = st.text_input("Mitgliedsnummer") # only digit (text_input to not lose first 0)
+        mitgliedsnummer = st.text_input("Mitgliedsnummer") # only digit (text_input to not loose first 0)
 
         st.divider()
 
@@ -128,12 +134,22 @@ with st.form("form"):
             type=["pdf", "jpg", "png"],
             accept_multiple_files=True
         )
-
-    # _, col, _ = st.columns([1,1,1])
-
-    # with col:
-    #     st.form_submit_button("Absenden", use_container_width=True)
     
-    st.form_submit_button("Absenden", use_container_width=True)
+    submitted = st.form_submit_button("Absenden", use_container_width=True)
+        
+    if submitted:
+        errors = []
 
-    # hoover, center btn, hide form?, subheader?, press enter to submit form?
+        if not validate_email(email):
+            errors.append("Ungültige E-Mail-Adresse")
+        
+        if errors:
+            for error in errors:
+                st.error(error)
+        
+        else:
+            st.success("Validierung erfolgreich")
+            # save form_data to db
+
+
+    
