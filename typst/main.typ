@@ -16,7 +16,6 @@
 
 // Inhaltsverzeichnis
 #outline(title: "Inhaltsverzeichnis")
-
 #pagebreak()
 
 // ==========================
