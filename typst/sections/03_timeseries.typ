@@ -50,14 +50,12 @@ Platzhalter
 == Weitere Ideen
 
 === Optimierung von Json-Struktur
-Es gibt natürlich optimierungspotential in der Strukturierung vom übergebenen Json Format. Man kann zum Beispiel Metadaten wie Einheit, Startzeitpunkt, Frequenz einmal definieren und anschließend die Werte in einem langen Array übergeben. Durch diese Struktur kann das LLM die Zeitpunkte für jeden Wert anhand deren Position im Array rekonstruieren.
+Man kann zum Beispiel Metadaten wie Einheit, Startzeitpunkt, Frequenz einmal definieren und anschließend die Werte in einem langen Array übergeben. Durch diese Struktur kann das LLM die Zeitpunkte für jeden Wert anhand deren Position im Array rekonstruieren. Zusätzlich kann man die originale Auflösung und somit auch die Datenpunkte reduzieren.
 
-actual/forecast 15 min 1 h
-
-Auflösung reduzieren
+Bei den Daten die wir verwenden gilt es zu beachten, dass Energiedaten üblicherweise in einer Frequenz von 15 Minuten vorliegen und unsere Vorhersagen eine Frequenz von einer Stunde hat. Hier ist es sinnvoll diese in zwei verschiedenen Jsons zu übergeben.
 
 === Kontextmanagement
-
+Um auf optional auf Zeitreihen zuzugreifen die bereits im Chatverlauf erzeugt wurden wäre es sinnvoll wichtige Metadaten zu speichern und das entsprechende Array oder den entsprechenden Plot dann auf Basis dieser wieder aufzurufen, wenn die Useranfrage das erfordert.
 
 
 #bibliography("../refs.bib", style: "ieee")
