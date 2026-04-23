@@ -3,8 +3,8 @@
 // ==========================
 
 #set document(
-  title: "Forschungsprojekt",
-  author: "Dein Name",
+  title: "Mantra - Forschungsprojekt",
+  author: "Schwarz David",
   date: datetime.today(),
 )
 
@@ -14,6 +14,29 @@
 
 #set heading(numbering: "1.")
 
+// Titelseite
+#let titlepage() = context [
+  #page[
+    #align(center)[
+      #text(size: 24pt, weight: "bold")[#document.title]
+
+      #v(2cm)
+
+      #text(size: 16pt)[#document.author.first()]
+
+      #v(1cm)
+
+      #text(size: 12pt)[
+        #document.date.display("[day].[month].[year]")
+      ]
+    ]
+  ]
+
+  #pagebreak()
+]
+
+#titlepage()
+
 // Inhaltsverzeichnis
 #outline(title: "Inhaltsverzeichnis")
 #pagebreak()
@@ -22,8 +45,8 @@
 // DOCUMENT STRUCTURE
 // ==========================
 
-#include "sections/00_Einleitung.typ"
-#include "sections/01_Zeitreihendaten.typ"
+// #include "sections/00_Einleitung.typ"
+// #include "sections/01_Zeitreihendaten.typ"
 
 #pagebreak()
 
