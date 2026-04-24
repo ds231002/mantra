@@ -3,7 +3,7 @@
 // ==========================
 
 #set document(
-  title: "Mantra - Forschungsprojekt",
+  title: "Multiagentengestützte Analyse von Energie- und Wasser-Zeitreihendaten",
   author: "Schwarz David",
   date: datetime.today(),
 )
