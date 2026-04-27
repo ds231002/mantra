@@ -57,5 +57,4 @@ Bei den Daten die wir verwenden gilt es zu beachten, dass Energiedaten üblicher
 === Kontextmanagement
 Um auf optional auf Zeitreihen zuzugreifen die bereits im Chatverlauf erzeugt wurden wäre es sinnvoll wichtige Metadaten zu speichern und das entsprechende Array oder den entsprechenden Plot dann auf Basis dieser wieder aufzurufen, wenn die Useranfrage das erfordert.
 
-
 #bibliography("../refs.bib", style: "ieee")
