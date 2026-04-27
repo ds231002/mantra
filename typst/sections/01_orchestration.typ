@@ -10,8 +10,6 @@ Die Grundidee ist es einen Supervisor Agent zu haben der optional auf spezialisi
 == Toolorchestration
 Mit Tools sind hier externe Funktionen, Programme oder Schnittstellen gemeint, die es dem Sprachmodell ermöglichen, über die reine Textgenerierung hinaus Aktionen auszuführen. Das kann sein auf Datenbanken zuzugreifen, Berechnungen durchzuführen, Grafiken genereiren und so weiter. Hiefür gibt es veschiedene Orchestrierungsmethoden die ich in folgende Kategorien einteilen möchte um einen groben Überblick über Möglichkeiten und Einschränkungen zu geben. Diese Thesen basieren teils nur auf Annahmen und sind auch Kontextabhängig.
 
-MCP
-
 === Deterministisch
 Hier werden fixe Pipelines definiert die jeweils eine bestimmte Intention abdecken sollen. Das LLM soll diese Intention erkennen und arbeitet dann deterministisch die zugrundeliegende Pipeline ab. Das ist sehr effizient und gut kontrollierbar. Effizient ist es deshalb, weil nur ein LLM-Aufruf für die Intentionserkennung notwendig ist und gegebenenfalls ein zweiter für die generierung der finalen Anwort. Die Pipelines sind klar vordefiniert und deswegen gut optimierbar und bieten auch eine sehr gute Kontrolle was passieren soll und was nicht. Einschränkungen sind hier, dass man nicht flexibel auf Anfragen reagieren kann die neu sind oder mehrere Intentionen so kombinieren wie man es nicht vordefiniert hat.
 
@@ -39,6 +37,39 @@ Eine Idee um den Supervisor zu entlasten ist die spezialisierte Suche im Chatver
 
 === Energiedaten (Zeitreihendaten)
 Dieser Agent soll auf Tools zugreifen können, um die Datenbank abzufragen und Berechnungen durchzuführen. Zusätzlich zu der Aufgabe Daten nur zu extrahieren könnte er auch dafür verantwortlich sein diese zu interetieren und Plots zu erzeugen.
+
+== MCP (Model Context Protocol)
+Das Model Context Protocol (MCP) ist ein Standard zur strukturierten Integration von Tools und Datenquellen in LLM-basierte Systeme. Es definiert, wie externe Funktionen beschrieben, entdeckt und aufgerufen werden können.
+
+Im Gegensatz zu Orchestrierungsstrategien wie deterministischen Pipelines, plan-basierten Ansätzen oder iterativen Verfahren (z. B. ReAct), beschreibt MCP nicht die Entscheidungslogik, sondern die Schnittstelle zwischen Modell und Tools.
+
+=== Vorteile
+- Einheitliche Tool-Schnittstelle (ähnlich wie eine API-Norm)
+- Wiederverwendbarkeit von Tool-Integrationen
+- Reduzierter Implementierungsaufwand
+- Bessere Interoperabilität zwischen verschiedenen Modellen und Systemen
+
+=== Einschränkungen
+- MCP löst keine Probleme der Entscheidungslogik oder Planung
+- Qualität hängt weiterhin stark von Prompting und Agent-Design ab
+- Zusätzliche Abstraktion kann Overhead erzeugen
+
+=== Sinnvoll
+- bei komplexen Systemen mit vielen Tools
+- bei modularen oder skalierbaren Architekturen
+- wenn mehrere Modelle oder Teams beteiligt sind
+
+=== weniger sinnvoll
+- bei sehr kleinen, festen Pipelines
+- wenn nur wenige, statische Tool-Aufrufe benötigt werden
+- bei extrem latency-kritischen Anwendungen
+
+=== Fazit
+In frühen Prototypenphasen ist der Einsatz von MCP oft nicht erforderlich, da der Fokus hier auf schneller Iteration, Validierung von Konzepten und minimalem Implementierungsaufwand liegt. Direkte Tool-Integrationen ohne zusätzliche Abstraktionsschicht sind in diesem Kontext meist einfacher umzusetzen, leichter zu debuggen und verursachen weniger Overhead.
+
+Mit zunehmender Systemkomplexität ändern sich jedoch die Anforderungen: Die Anzahl an Tools, Agenten und Schnittstellen wächst, wodurch individuelle Integrationen schnell unübersichtlich und schwer wartbar werden. An diesem Punkt bietet MCP einen entscheidenden Vorteil, da es eine standardisierte und konsistente Struktur für Toolzugriffe schafft.
+
+In produktiven Systemen trägt MCP somit wesentlich zur Skalierbarkeit, Wartbarkeit und Erweiterbarkeit bei. Insbesondere in modularen Architekturen mit mehreren spezialisierten Agenten oder bei der Zusammenarbeit mehrerer Teams ermöglicht es eine klare Trennung von Verantwortlichkeiten und reduziert langfristig die Komplexität des Gesamtsystems.
 
 == Datenbankabfrage
 

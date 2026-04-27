@@ -45,7 +45,7 @@ Wie in @fig:token_comparison zu sehen zeigt sich, dass der Tokenverbrauch selbst
 In @fig:execution_time_comparison wird die Berechnungszeit gegenübergestellt. Bei einem Tag wird ist das Array noch deutlich schneller als der Plot. Aber beim anderen Datensatz wo drei Tage verglichen werden sollen ist der Plot klar schneller. Die Erklärung könnte sein, dass die längere Json für das LLM ab diesem Punkt schon deutlich schwieriger zu überblicken ist. Es gitl zu beachten, dass die Zeitreihe des einen Tages deutlich realistischer mit mehr Varianz generiert ist und die drei Verbrauchstypen sehr glatte, saubere Linien sind. Das ist sehr interessant, weil man hier klar sehen kann, dass das Array trotz einfacherer Datenpunkte deutlich länger braucht, aber der Plot scheinbar sogar tortz mehr Datenpunkten von der vereinfachten Darstellung massiv profitiert und viel schneller verarbeitet wird. Darauf könnte man Aufbauen und testen ob man aus realen geglättenten Daten noch die gewünschten Muster gut oder sogar besser erkennen kann bei erhöhter Effizienz. Außerdem wäre eine Hybridlösung denkbar bei der man sehr kurze Zeitreihen als Array übergibt, weil diese dann schneller verarbeitet werden und das LLM noch gut den Überblick behält und ab einer gewissen Anzahl an Datenpunkten dann auf Plotanalyse wechselt.
 
 == Eigener Test 2: single timeseries, different amount of datapoints
-Platzhalter
+Hier ist geplant längere Zeitreihen zu testen und in einem Linechart darzustellen, um die tatsächliche Tokenersparnis zu überprüfen.
 
 == Weitere Ideen
 
