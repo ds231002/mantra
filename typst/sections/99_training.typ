@@ -24,4 +24,4 @@ Im Paper "Proactive Agent: Shifting LLM Agents from Reactive Responses to Active
 
 Proaktive Hilfe anzubieten kann für den Assitenten den wir entwickeln wollen durchaus interessant sein. Allerdings ist das eher zweitrangig zumal es wie beschrieben für unseren Anwendungsfall noch zu fehleranflällig ist und der Kontext nicht klar genug ist.
 
-#bibliography("../refs.bib", style: "ieee")
+// #bibliography("../refs.bib", style: "ieee")

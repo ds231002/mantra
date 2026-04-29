@@ -31,35 +31,29 @@
       ]
     ]
   ]
-
-  #pagebreak()
 ]
-
-#titlepage()
-
-// Inhaltsverzeichnis
-#outline(title: "Inhaltsverzeichnis")
-#pagebreak()
 
 // ==========================
 // DOCUMENT STRUCTURE
 // ==========================
 
-// = Thema 1
-// Testzitat @liuPictureWorthThousand
-
-// == Thema 1.1
-
-// = Thema 2
-
-// == Thema 2.2
-
-// #include "sections/00_introduction.typ"
-// #pagebreak()
-// #include "sections/01_orchestration.typ"
-// #pagebreak()
-// #include "sections/03_timeseries.typ"
-
+// title
+#titlepage()
 #pagebreak()
 
+// directory
+#outline(title: "Inhaltsverzeichnis")
+#pagebreak()
+
+// content
+#include "sections/01_introduction.typ"
+#pagebreak()
+#include "sections/02_orchestration.typ"
+#pagebreak()
+#include "sections/03_timeseries.typ"
+#pagebreak()
+#include "sections/99_training.typ"
+#pagebreak()
+
+// references
 #bibliography("refs.bib", style: "ieee")
