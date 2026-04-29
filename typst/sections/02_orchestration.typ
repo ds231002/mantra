@@ -4,7 +4,7 @@
 Die Grundidee ist es einen Supervisor Agent zu haben der optional auf spezialisierte Agents zugreift. Dieses Konzept ist in @fig:high-level_mantra_architecture_proposal dargestellt.
 
 #figure(
-  image("../figures/orchestration/high-level_mantra_architecture_proposal.png", width: 80%),
+  image("../figures/orchestration/high-level_mantra_architecture_proposal.png", width: 90%),
   caption: [High-level MANTRA architecture proposal],
 ) <fig:high-level_mantra_architecture_proposal>
 
@@ -31,6 +31,59 @@ Hier werden fixe Pipelines definiert die jeweils eine bestimmte Intention abdeck
 
 === Plan-Basiert
 Die Idee ist das LLM einen Plan bauen zu lassen wie die verfügbaren Tools aufgerufen werden sollen um die Nutzeranfrage optimal zu erfüllen. So wird man deutlich flexibler was neue Anfragen angeht. Allerdings verliert man auch Kontrolle und es gibt mehr Fehlerpotential.
+
+=== Layered Execution
+
+#figure(
+  image("../figures/orchestration/layer_execution.png", width: 100%),
+  caption: [Overview of RETO. Left: layer assignment from the task query and tool descriptions. Top-right: repair loop for failed tool calls (schema gate → LLM repair) under a budget. Bottom-right: context-constrained execution with step-specific tool constraints; observations are carried across layers to produce the final answer. @zheRobustEfficientTool2026],
+) <fig:layer_execution>
+
+Das Paper "Robust and Efficient Tool Orchestration via Layered Execution Structures with Reflective Correction" untersucht, wie KI-Agenten mehrere Tools zuverlässig koordinieren können. Die zentrale Beobachtung ist, dass Fehler selten durch einzelne Tool-Aufrufe entstehen, sondern durch deren falsche Organisation und Reihenfolge @zheRobustEfficientTool2026.
+
+Anstelle detaillierter Planung schlagen die Autoren eine vereinfachte Struktur vor:  Tools werden in grobe Ausführungsschichten (Layer) eingeteilt, die ihre Abhängigkeiten 
+implizit abbilden. Die Ausführung erfolgt schichtweise, sodass ein Modell in jedem Schritt nur eine kleine, relevante Teilmenge an Tools betrachtet @zheRobustEfficientTool2026.
+
+Zusätzlich wird ein Mechanismus zur lokalen Fehlerkorrektur eingeführt. Fehlerhafte Tool-Aufrufe werden automatisch erkannt und korrigiert, ohne die gesamte  Ausführungsstrategie neu zu planen. Dadurch werden Fehler isoliert und ihre Ausbreitung  verhindert @zheRobustEfficientTool2026.
+
+Die Experimente zeigen, dass diese Kombination aus grober Struktur und lokaler Korrektur 
+die Robustheit und Effizienz deutlich erhöht. Selbst kleinere, nicht speziell trainierte 
+Modelle erreichen dadurch eine Leistung, die mit größeren oder feinjustierten Systemen 
+vergleichbar ist, bei gleichzeitig geringerem Rechenaufwand @zheRobustEfficientTool2026.
+
+*Zentrale Erkenntnis:* 
+Eine geeignete Strukturierung der Tool-Ausführung ist entscheidender für die Leistung 
+als die reine Modellstärke oder detaillierte Planung @zheRobustEfficientTool2026.
+
+=== Utility-Guided
+
+#figure(
+  image("../figures/orchestration/utility_guided.png", width: 90%),
+  caption: [Overview of the proposed utility-guided agent orchestration framework. At each step, the agent constructs a state representation from the current query, interaction history, and tool observations. A utility scorer evaluates candidate actions using estimated gain, step cost, uncertainty, and redundancy, and the action selector chooses the highest-utility action. The process iterates until a stopping condition is met. @liuUtilityGuidedAgentOrchestration2026],
+) <fig:utility_guided>
+
+Dieses Paper untersucht, wie LLM-Agenten ihre Tool-Nutzung effizient steuern können. Zentrales Problem ist der Trade-off zwischen Antwortqualität und Ausführungskosten: mehr Zwischenschritte (z. B. Retrieval oder Tool Calls) verbessern oft die Qualität, führen aber zu höherem Tokenverbrauch und längerer Laufzeit @liuUtilityGuidedAgentOrchestration2026.
+
+Anstatt Agentenverhalten nur implizit über Prompts zu steuern, formuliert das Paper die Orchestrierung als explizites Entscheidungsproblem. In jedem Schritt wählt der Agent eine Aktion (z. B. Antworten, Retrieval, Tool-Nutzung, Verifikation oder Stoppen) basierend auf einer Utility-Funktion @liuUtilityGuidedAgentOrchestration2026.
+
+Diese Utility kombiniert vier Faktoren:
+- erwarteter Nutzen (Gain)
+- Kosten eines weiteren Schritts (Cost)
+- Unsicherheit (Uncertainty)
+- Redundanz (Redundancy)
+
+Der Agent führt iterativ die Aktion mit der höchsten Utility aus und entscheidet explizit, wann er stoppen sollte @liuUtilityGuidedAgentOrchestration2026.
+
+*Zentrale Erkenntnisse*
+
+- Mehr Reasoning-Schritte verbessern die Qualität nur begrenzt; der zusätzliche Nutzen nimmt schnell ab.
+- Freie Agenten (z. B. ReAct) erzielen hohe Qualität, verursachen aber oft unnötige Kosten.
+- Explizite Orchestrierung ermöglicht eine bessere Kontrolle über Kosten und Verhalten.
+- Einfache heuristische Signale reichen bereits aus, um Agentenverhalten sinnvoll zu steuern.
+- Effizienz entsteht nicht nur durch bessere Modelle, sondern durch bessere Entscheidungslogik.
+
+Das Paper zeigt damit, dass Agent-Orchestrierung ein eigenständiges Problem ist und 
+entscheidend für praktische, kosteneffiziente LLM-Systeme.
 
 === Iterativ (ReAct)
 ReAct (Reasoning + Acting) ist eine Methode wo das LLM den Tooloutput wieder als Input bekommt und überprüft ob die Informationen ausreichend sind oder weitere Toolaufrufe erforderlich sind. Es werden so lange neue Toolaufrufe getriggert bis das LLM entscheidet, dass es nun genügend oder die passenden Informationen erhalten hat. Es ist ratsam hierfür ein Schleifenlimit zu setzen, um die Kosten und die Laufzeit unter Kontrolle zu halten.
