@@ -6,13 +6,14 @@ Direction = Literal["consumption", "generation"]
 Frequency = Literal["15min", "1h"]
 
 def create_data(
-    meter_id: str,
+    mp_id: str,
+    mp_name: Optional[str]
+    mp_type: Direction,
     location: str,
-    direction: Direction,
     start_date: pd.Timestamp,
     end_date: pd.Timestamp,
     freq: Frequency,
-    forecast: bool
+    data_type: bool
 ) -> pd.DataFrame:
     timestamps = pd.date_range(start=start_date, end=end_date, freq=freq, inclusive="left")
 
