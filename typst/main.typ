@@ -46,8 +46,8 @@
 #pagebreak()
 
 // content
-#include "sections/01_introduction.typ"
-#pagebreak()
+// #include "sections/01_introduction.typ"
+// #pagebreak()
 #include "sections/02_orchestration.typ"
 #pagebreak()
 #include "sections/03_timeseries.typ"
